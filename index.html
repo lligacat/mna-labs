@@ -23,11 +23,11 @@
   --night-3:#2c2c2e;
   --on-night:#f5f5f7;
   --on-night-2:#a1a1a6;
-  --blue:#0a8f72;
-  --blue-hover:#087a61;
-  --blue-soft:rgba(10,143,114,.12);
-  --link:#0a7d64;
-  --link-night:#3fd4b1;
+  --blue:#6b4eff;
+  --blue-hover:#5838f0;
+  --blue-soft:rgba(107,78,255,.11);
+  --link:#5a3ef5;
+  --link-night:#a796ff;
   --green:#30d158;
   --orange:#ff9f0a;
   --r-tile:16px;
@@ -47,11 +47,11 @@ a{color:inherit;text-decoration:none}
 @media (max-width:640px){.wrap,.wide{padding:0 16px}}
 
 h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
-.h-hero{font-size:clamp(48px,8vw,96px);letter-spacing:-.035em;line-height:1.03}
-.h-sec{font-size:clamp(36px,5.6vw,64px);letter-spacing:-.032em}
+.h-hero{font-size:clamp(48px,8vw,96px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
+.h-sec{font-size:clamp(40px,6.2vw,80px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
 .h-tile{font-size:clamp(28px,3.4vw,40px)}
 .eyebrow{font-size:clamp(19px,1.8vw,24px);font-weight:600;letter-spacing:-.015em;margin-bottom:8px}
-.sub{font-size:clamp(19px,1.9vw,24px);line-height:1.33;letter-spacing:-.015em;font-weight:400}
+.sub{font-size:clamp(19px,1.9vw,25px);line-height:1.32;letter-spacing:-.02em;font-weight:500}
 .center{text-align:center}
 
 .links{display:flex;gap:28px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:24px}
@@ -67,19 +67,38 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .dark .more,.hero .more{color:var(--link-night)}
 
 /* NAV */
-.nav{position:sticky;top:0;z-index:50;height:48px;background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);color:var(--ink);border-bottom:1px solid rgba(0,0,0,.06);transition:background .3s,color .3s,border-color .3s}
-.nav.on-dark{background:transparent;color:var(--on-night);border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
-.nav.on-dark .nav-links{color:rgba(245,245,247,.75)}
-.nav.on-dark .nav-links a:hover{color:#fff}
-.nav.on-dark .nav-cta{background:#fff;color:#000}
-.nav .wide{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
-.logo svg{width:18px;height:18px}
-.nav-links{display:flex;gap:30px;font-size:13px;color:var(--ink-2)}
-.nav-links a:hover{color:var(--ink)}
-.nav-cta{font-size:13px;font-weight:500;background:var(--ink);color:#fff;padding:6px 14px;border-radius:8px;transition:background .3s,color .3s}
-.nav-prog{position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--link-night);transform-origin:0 50%;transform:scaleX(0);opacity:.7}
-@media (max-width:820px){.nav-links{display:none}}
+/* menú flotant: una càpsula de vidre amb un indicador que llisca fins a l'apartat actiu */
+.nav{position:sticky;top:0;z-index:50;height:68px;padding:10px 16px 0;color:var(--ink);pointer-events:none}
+.nav-in{pointer-events:auto;position:relative;max-width:1280px;height:52px;margin:0 auto;padding:0 8px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-radius:16px;background:rgba(255,255,255,.74);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);box-shadow:0 0 0 1px rgba(0,0,0,.06),0 10px 30px -12px rgba(0,0,0,.18);transition:background .4s,box-shadow .4s,color .4s}
+.nav.on-dark{color:var(--on-night)}
+.nav.on-dark .nav-in{background:rgba(28,28,30,.5);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 10px 30px -12px rgba(0,0,0,.5)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;letter-spacing:-.02em;white-space:nowrap}
+.logo svg{width:20px;height:20px;color:var(--blue)}
+.nav.on-dark .logo svg{color:var(--link-night)}
+.nav-links{position:relative;display:flex;gap:2px;font-size:14px;font-weight:500;color:var(--ink-2)}
+.nav-links a{position:relative;z-index:1;padding:8px 13px;border-radius:10px;white-space:nowrap;transition:color .3s}
+.nav-links a:hover,.nav-links a.on{color:var(--ink)}
+.nav-ind{position:absolute;top:0;left:0;height:100%;width:0;border-radius:10px;background:rgba(0,0,0,.06);opacity:0;transition:transform .5s var(--ease-out),width .5s var(--ease-out),opacity .3s}
+.nav.on-dark .nav-links{color:rgba(245,245,247,.72)}
+.nav.on-dark .nav-links a:hover,.nav.on-dark .nav-links a.on{color:#fff}
+.nav.on-dark .nav-ind{background:rgba(255,255,255,.12)}
+.nav-cta{font-size:14px;font-weight:600;background:var(--blue);color:#fff;padding:9px 16px;border-radius:11px;white-space:nowrap;transition:background .3s,transform .3s var(--ease-out)}
+.nav-cta:hover{background:var(--blue-hover);transform:translateY(-1px)}
+.nav-prog{position:absolute;left:16px;right:16px;bottom:0;height:2px;border-radius:2px;background:var(--blue);transform-origin:0 50%;transform:scaleX(0)}
+.nav.on-dark .nav-prog{background:var(--link-night)}
+.nav-burger{display:none;width:40px;height:40px;border:0;border-radius:10px;background:none;color:inherit;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.nav-burger i{display:block;width:18px;height:1.8px;border-radius:2px;background:currentColor;transition:transform .35s var(--ease-out)}
+.nav.open .nav-burger i:first-child{transform:translateY(3.9px) rotate(45deg)}
+.nav.open .nav-burger i:last-child{transform:translateY(-3.9px) rotate(-45deg)}
+@media (max-width:1180px){
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;gap:2px;padding:10px;border-radius:16px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 30px 60px -20px rgba(0,0,0,.3);font-size:19px;font-weight:600;color:var(--ink)}
+  .nav.on-dark .nav-links{background:#1c1c1e;color:var(--on-night)}
+  .nav.open .nav-links{display:flex}
+  .nav-links a{padding:12px 14px}
+  .nav-ind{display:none}
+  .nav-burger{display:flex}
+}
+@media (max-width:560px){.nav{padding:8px 10px 0}.nav-in{padding:0 4px 0 14px;gap:8px}.nav-cta{display:none}}
 .nav-right{display:flex;align-items:center;gap:12px}
 .lang{display:inline-flex;padding:2px;border-radius:8px;border:1px solid var(--line);gap:2px}
 .lang button{font:inherit;font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--ink-2);background:transparent;border:0;border-radius:6px;padding:4px 8px;cursor:pointer;min-width:30px;transition:background .2s,color .2s}
@@ -122,10 +141,10 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 @media (max-width:860px){.ent{grid-template-columns:1fr}.ent-aside{position:static;padding:28px}}
 
 /* ---------------- HERO (pinned, morph) ---------------- */
-.hero{position:relative;height:300vh;background:var(--black);color:var(--on-night);margin-top:-48px}
+.hero{position:relative;height:300vh;background:var(--black);color:var(--on-night);margin-top:-68px}
 .hero-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 #orb{position:absolute;inset:0;width:100%;height:100%}
-.hero-copy{position:absolute;left:0;right:0;top:calc(48px + 12vh);text-align:left;z-index:2;will-change:transform,opacity}
+.hero-copy{position:absolute;left:0;right:0;top:calc(48px + 12vh);text-align:left;z-index:2;will-change:transform,opacity;margin-top:20px}
 .hero-copy .eyebrow{color:var(--on-night-2)}
 .hero-copy .sub{color:var(--on-night-2);max-width:34ch;margin:22px 0 0}
 .hero-copy .links{justify-content:flex-start}
@@ -145,12 +164,12 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 @keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 
 /* SECTIONS */
-.sec{padding:clamp(80px,11vw,140px) 0}
+.sec{padding:clamp(96px,13vw,180px) 0}
 .paper{background:var(--paper)}
 .dark{background:var(--black);color:var(--on-night)}
 .dark .ink-2{color:var(--on-night-2)}
 .ink-2{color:var(--ink-2)}
-.sec-intro{display:grid;grid-template-columns:1.1fr 1fr;gap:20px 64px;align-items:end;margin:0 0 clamp(48px,6vw,72px);text-align:left}
+.sec-intro{display:grid;grid-template-columns:1.1fr 1fr;gap:24px 72px;align-items:end;margin:0 0 clamp(56px,7vw,96px);text-align:left}
 .sec-intro h2{text-wrap:balance}
 .sec-intro .sub{color:var(--ink-2);margin-top:0;max-width:38ch}
 @media (max-width:820px){.sec-intro{grid-template-columns:1fr}}
@@ -300,7 +319,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .cap p{color:var(--ink-2);margin-top:10px;font-size:17px}
 .cap.feat{background:var(--ink);color:var(--on-night)}
 .cap.feat p{color:var(--on-night-2)}
-.cap.feat .ico{background:rgba(63,212,177,.16);color:var(--link-night)}
+.cap.feat .ico{background:rgba(167,150,255,.16);color:var(--link-night)}
 .h-bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden;width:min(320px,60vw)}
 .h-bar i{display:block;height:100%;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)}
 @media (max-width:640px){.h-pin{padding-left:0}.cap{padding:26px}}
@@ -421,7 +440,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .priv-list b{display:block;font-size:17px;font-weight:600;margin-bottom:6px;padding-top:14px;border-top:1px solid var(--night-3)}
 .priv-list p{font-size:15px;color:var(--on-night-2);line-height:1.45}
 .vault{background:var(--night);border:1px solid var(--night-3);border-radius:20px;padding:26px;font-variant-numeric:tabular-nums;transition:border-color .8s,box-shadow .8s}
-.vault.locked{border-color:rgba(63,212,177,.55);box-shadow:0 0 0 1px rgba(63,212,177,.25),0 40px 120px -40px rgba(63,212,177,.45)}
+.vault.locked{border-color:rgba(167,150,255,.55);box-shadow:0 0 0 1px rgba(167,150,255,.25),0 40px 120px -40px rgba(167,150,255,.45)}
 .v-head{display:flex;align-items:center;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--night-3)}
 .v-head svg{width:30px;height:30px;color:var(--on-night-2);transition:color .6s;overflow:visible}
 .v-shackle{transform:translateY(-3.5px);transition:transform .6s var(--ease-out)}
@@ -429,7 +448,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .vault.locked .v-shackle{transform:none}
 .v-title{font-weight:600;font-size:16px}
 .v-state{margin-left:auto;font-size:13px;font-weight:500;padding:5px 11px;border-radius:20px;background:rgba(255,159,10,.14);color:var(--orange);transition:background .6s,color .6s}
-.vault.locked .v-state{background:rgba(63,212,177,.14);color:var(--link-night)}
+.vault.locked .v-state{background:rgba(167,150,255,.14);color:var(--link-night)}
 .vault dl > div{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:15px 0;border-bottom:1px solid var(--night-2)}
 .vault dt{font-size:14px;color:var(--on-night-2)}
 .vault dd{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:clip;min-width:0}
@@ -456,29 +475,45 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .pk-switch span span{display:block;font-size:14px;color:var(--ink-2);line-height:1.4}
 .pkgs[data-tab="webs"] .pk-switch{display:none}
 .pk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px;align-items:stretch}
-.pk{position:relative;background:var(--white);border:1px solid var(--line-2);border-radius:var(--r-tile);padding:30px 26px 26px;display:flex;flex-direction:column;gap:18px;transition:box-shadow .5s var(--ease-out),border-color .3s}
-.pk:hover{box-shadow:0 30px 60px -34px rgba(0,0,0,.28)}
-.pk.top{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.pk-tag{position:absolute;top:-12px;left:24px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--blue);color:#fff;letter-spacing:-.005em}
-.pk h3{font-size:24px;letter-spacing:-.025em;line-height:1.15}
-.pk-d{font-size:15px;color:var(--ink-2);line-height:1.4;margin-top:-8px}
+.pk{position:relative;background:var(--white);border-radius:22px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px var(--line-2);transition:box-shadow .5s var(--ease-out),transform .5s var(--ease-out)}
+.pk:hover{box-shadow:0 0 0 1px var(--line-2),0 34px 70px -36px rgba(0,0,0,.3)}
+.pk.top{box-shadow:0 0 0 2px var(--blue)}
+.pk.top:hover{box-shadow:0 0 0 2px var(--blue),0 34px 70px -36px rgba(107,78,255,.45)}
+.pk-body{position:relative;padding:28px 26px 30px;display:flex;flex-direction:column;gap:18px;flex:1}
+.pk-tag{position:absolute;top:-14px;left:26px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:20px;background:var(--blue);color:#fff;letter-spacing:-.005em;box-shadow:0 6px 16px -6px rgba(107,78,255,.6)}
+.pk h3{font-size:27px;font-weight:700;letter-spacing:-.035em;line-height:1.1}
+.pk-d{font-size:15px;color:var(--ink-2);line-height:1.4;margin-top:-10px}
+/* exemple real: captura amb el nom a sobre */
+.pk-ex{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#111;color:#fff}
+.pk-ex img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease-out)}
+.pk:hover .pk-ex img{transform:scale(1.045)}
+.pk-ex::after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.72));pointer-events:none}
+.pk-ex-c{position:absolute;left:18px;right:18px;bottom:14px;z-index:1;display:grid;gap:1px}
+.pk-ex-c small{font-size:12px;font-weight:500;color:rgba(255,255,255,.72)}
+.pk-ex-c b{font-size:16px;font-weight:600;letter-spacing:-.02em}
+a.pk-ex .pk-ex-c b::after{content:" ↗";font-weight:500;opacity:.7}
+.pk-ex.none{display:grid;place-items:center;background:radial-gradient(120% 90% at 30% 20%,#2a2440,#0c0b12)}
+.pk-ex.none svg{width:46px;height:46px;color:rgba(255,255,255,.85);padding:12px;border-radius:50%;background:rgba(255,255,255,.12);margin-bottom:24px}
 .pk-p{display:flex;align-items:baseline;gap:4px 8px;flex-wrap:wrap}
 .pk-p:not(.sm) .pk-from{flex-basis:100%}
 .pk-p + .pk-p{margin-top:-14px}
 .pk-from,.pk-u{font-size:14px;color:var(--ink-2)}
 .pk-n{font-size:42px;font-weight:600;letter-spacing:-.04em;line-height:1.05;font-variant-numeric:tabular-nums}
 .pk-p.sm .pk-n{font-size:28px}
-.pk-meta{display:grid;gap:2px;font-size:14px;color:var(--ink-2);padding-bottom:18px;border-bottom:1px solid var(--line-2)}
+.pk-meta{display:grid;gap:2px;font-size:13.5px;color:var(--ink-2);margin-top:-6px}
+.pk ul{padding-top:20px;border-top:1px solid var(--line-2)}
 .pk ul{list-style:none;display:grid;gap:9px}
 .pk li{display:flex;gap:11px;font-size:15px;line-height:1.35}
 .pk li::before{content:"";flex:none;width:9px;height:5px;margin-top:6px;border-left:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:rotate(-45deg)}
 .pk li.pk-all{display:none;color:var(--link);font-weight:500}
 .pkgs.all li.pk-all{display:flex}
-.pk-ex{margin-top:auto;background:var(--paper);border-radius:12px;padding:15px 17px;font-size:14px;line-height:1.42;color:var(--ink-2)}
-.pk-ex b{display:block;color:var(--ink);font-size:13px;font-weight:600;margin-bottom:3px}
 .pk .btn{width:100%}
-.pk.alt{background:var(--ink);border-color:var(--ink);color:var(--on-night);justify-content:space-between}
-.pk.alt .pk-d{color:var(--on-night-2);margin-top:0;font-size:17px}
+.pk.top .btn{background:var(--blue)}
+.pk.top .btn:hover{background:var(--blue-hover)}
+.pk.alt{background:var(--ink);color:var(--on-night);box-shadow:none}
+.pk.alt .pk-body{justify-content:space-between;padding:34px 30px}
+.pk.alt h3{font-size:32px}
+.pk.alt .pk-d{color:var(--on-night-2);margin-top:0;font-size:18px}
 .pk.alt .btn{background:#fff;color:#000;margin-top:auto}
 .pk.alt .btn:hover{background:#e8e8ed}
 .pk-maint{margin-top:16px;background:var(--white);border:1px solid var(--line-2);border-radius:var(--r-tile);padding:26px 28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px 40px;align-items:center}
@@ -498,7 +533,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .pk-panel.in .pk{animation:pkIn .9s var(--ease-out) both;animation-delay:calc(var(--i,0) * 90ms)}
 @keyframes pkIn{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.pk-panel .pk,.pk-panel.in .pk{opacity:1;animation:none}}
-@media (max-width:640px){.pk{padding:28px 22px 22px}.pk-tabs button{padding:9px 13px;font-size:14px}}
+@media (max-width:640px){.pk-body{padding:26px 22px 26px}.pk-tabs button{padding:9px 13px;font-size:14px}}
 
 /* PROCESS */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -517,7 +552,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.028em;line-height:1.07}
 .tech .sub{color:var(--on-night-2);margin-top:18px}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px}
 .chips span{padding:10px 18px;border-radius:980px;background:var(--night-2);color:var(--on-night);font-size:15px;border:1px solid var(--night-3)}
-.term{background:#0d0d0e;border:1px solid var(--night-3);border-radius:18px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(63,212,177,.25)}
+.term{background:#0d0d0e;border:1px solid var(--night-3);border-radius:18px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(167,150,255,.25)}
 .term .bar{height:38px;display:flex;align-items:center;gap:7px;padding:0 16px;border-bottom:1px solid var(--night-3);background:var(--night)}
 .term .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a3c}
 .term .bar span{margin-left:auto;margin-right:auto;font-size:12px;color:var(--on-night-2);transform:translateX(-24px)}
@@ -535,7 +570,7 @@ form{margin-top:48px;display:grid;gap:14px;text-align:left}
 .field input,.field textarea,.field select{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--white);border:1px solid var(--ink-3);border-radius:var(--r-ui);padding:26px 16px 10px;transition:border-color .2s,box-shadow .2s;appearance:none}
 .field textarea{min-height:140px;resize:vertical}
 .field label{position:absolute;left:17px;top:18px;color:var(--ink-3);font-size:17px;pointer-events:none;transition:all .15s var(--ease)}
-.field input:focus,.field textarea:focus,.field select:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(10,143,114,.18)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(107,78,255,.18)}
 .field input:focus+label,.field input:not(:placeholder-shown)+label,.field textarea:focus+label,.field textarea:not(:placeholder-shown)+label,.field select+label{top:8px;font-size:12px}
 .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2386868b' stroke-width='1.6'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
 .submit{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:10px}
@@ -567,18 +602,19 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
 <body>
 
 <header class="nav on-dark" id="nav">
-  <div class="wide">
+  <div class="nav-in">
     <a href="#top" class="logo" aria-label="MNA LABS, inici">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20V4l9 9 9-9v16" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
       MNA LABS
     </a>
-    <nav class="nav-links" aria-label="Principal">
+    <nav class="nav-links" id="navLinks" aria-label="Principal">
+      <span class="nav-ind" id="navInd" aria-hidden="true"></span>
       <a href="#serveis">Serveis</a>
       <a href="#programari">Programari</a>
-      <a href="#paquets">Paquets</a>
-      <a href="#emprenedoria">Emprenedoria</a>
-      <a href="#free-developing">Free Developing</a>
       <a href="#projectes">Projectes</a>
+      <a href="#paquets">Paquets</a>
+      <a href="#free-developing">Free Developing</a>
+      <a href="#emprenedoria">Emprenedoria</a>
       <a href="#contacte">Contacte</a>
     </nav>
     <div class="nav-right">
@@ -586,9 +622,10 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
         <button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="es" aria-pressed="false">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
       <a href="#contacte" class="nav-cta">Comencem</a>
+      <button type="button" class="nav-burger" id="navBurger" aria-label="Menú" aria-expanded="false" aria-controls="navLinks"><i></i><i></i></button>
     </div>
+    <span class="nav-prog" id="navProg"></span>
   </div>
-  <span class="nav-prog" id="navProg"></span>
 </header>
 
 <main id="top">
@@ -879,8 +916,8 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
   <section class="sec paper pkgs" id="paquets" data-tab="webs">
     <div class="wide">
       <div class="sec-intro rv">
-        <h2 class="h-sec">Paquets clars. Preus clars.</h2>
-        <p class="sub">Tria el punt de partida. Cada paquet inclou tot el que cal per arrencar, i el pressupost final el tanquem amb tu per escrit.</p>
+        <h2 class="h-sec">Tria el teu paquet.</h2>
+        <p class="sub">Preus clars i un exemple real de cada paquet. El pressupost final el tanquem amb tu per escrit.</p>
       </div>
       <div class="pk-bar rv">
         <div class="pk-tabs" role="tablist" aria-label="Tipus de paquet">
@@ -892,41 +929,49 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
       <div class="pk-panel rv" id="pk-webs" role="tabpanel">
         <div class="pk-grid">
           <article class="pk" style="--i:0">
-            <h3>Web informativa</h3>
-            <p class="pk-d">La teva empresa ben explicada a internet.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="500">500 €</span><span class="pk-u">pagament únic</span></div>
-            <div class="pk-meta"><span>Manteniment opcional: 25 €/mes</span><span>Llesta en 2–3 setmanes</span></div>
-            <ul><li>Disseny a mida, sense plantilles</li><li>Fins a 6 pàgines</li><li>Adaptada a mòbil i tauleta</li><li>SEO bàsic i fitxa de Google Business</li><li>Formulari de contacte i WhatsApp</li><li>Textos legals, cookies i RGPD</li><li>Domini i allotjament el primer any</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Una clínica de fisioteràpia que vol explicar els tractaments, mostrar l'equip i rebre consultes des del mòbil.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lligacat.github.io/alda/" target="_blank" rel="noopener"><img src="img/ex-alda.jpg" alt="Web de Mecanitzats ALDA" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Mecanitzats ALDA</b></span></a>
+            <div class="pk-body">
+              <h3>Web informativa</h3>
+              <p class="pk-d">La teva empresa ben explicada a internet.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="500">500 €</span><span class="pk-u">pagament únic</span></div>
+              <div class="pk-meta"><span>Manteniment opcional: 25 €/mes</span><span>Llesta en 2–3 setmanes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+              <ul><li>Disseny a mida, sense plantilles</li><li>Fins a 6 pàgines</li><li>Adaptada a mòbil i tauleta</li><li>SEO bàsic i fitxa de Google Business</li><li>Formulari de contacte i WhatsApp</li><li>Textos legals, cookies i RGPD</li><li>Domini i allotjament el primer any</li></ul>
+            </div>
           </article>
           <article class="pk" style="--i:1">
-            <h3>Web amb compres integrades</h3>
-            <p class="pk-d">Ven serveis, reserves o vals regal des de la teva web.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="1490">1.490 €</span><span class="pk-u">pagament únic</span></div>
-            <div class="pk-meta"><span>Manteniment opcional: 35 €/mes</span><span>Llesta en 3–4 setmanes</span></div>
-            <ul><li>Tot el de la web informativa</li><li>Pagament amb targeta, Bizum, Apple Pay i Google Pay</li><li>Fins a 20 productes, serveis o reserves</li><li>Correus de confirmació automàtics</li><li>Panell per veure i gestionar les vendes</li><li>Factura automàtica a cada compra</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Un restaurant que ven vals regal i menús per emportar sense passar per cap plataforma de tercers.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lligacat.github.io/pla-de-bages/" target="_blank" rel="noopener"><img src="img/ex-pladebages.jpg" alt="Web de la Braseria Pla de Bages" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Braseria Pla de Bages</b></span></a>
+            <div class="pk-body">
+              <h3>Web amb compres integrades</h3>
+              <p class="pk-d">Ven serveis, reserves o encàrrecs des de la teva web.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="1490">1.490 €</span><span class="pk-u">pagament únic</span></div>
+              <div class="pk-meta"><span>Manteniment opcional: 35 €/mes</span><span>Llesta en 3–4 setmanes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+              <ul><li>Tot el de la web informativa</li><li>Pagament amb targeta, Bizum, Apple Pay i Google Pay</li><li>Fins a 20 productes, serveis o reserves</li><li>Correus de confirmació automàtics</li><li>Panell per veure i gestionar les vendes</li><li>Factura automàtica a cada compra</li></ul>
+            </div>
           </article>
           <article class="pk top" style="--i:2">
-            <span class="pk-tag">El més demanat</span>
-            <h3>Ecommerce bàsic</h3>
-            <p class="pk-d">Una botiga en línia completa, teva i sense comissions per venda.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="2000">2.000 €</span><span class="pk-u">pagament únic</span></div>
-            <div class="pk-meta"><span>Manteniment opcional: 49 €/mes</span><span>Llesta en 4–6 setmanes</span></div>
-            <ul><li>Catàleg il·limitat amb variants i estoc</li><li>Enviaments amb tarifes per zona</li><li>Comptes de client, cupons i descomptes</li><li>Factures i correus automàtics</li><li>Connexió amb Google Shopping i Meta</li><li>Panell de gestió fet per a la teva botiga</li><li>Sense quotes mensuals de plataforma</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Una botiga de vins que vol vendre a tot l'Estat sense pagar quotes ni comissions a Shopify.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Ecommerce">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lligacat.github.io/fundicat/" target="_blank" rel="noopener"><img src="img/ex-fundicat.jpg" alt="Botiga en línia de Fundicat" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Fundicat</b></span></a>
+            <div class="pk-body">
+              <span class="pk-tag">El més demanat</span>
+              <h3>Ecommerce bàsic</h3>
+              <p class="pk-d">Una botiga en línia completa, teva i sense comissions per venda.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="2000">2.000 €</span><span class="pk-u">pagament únic</span></div>
+              <div class="pk-meta"><span>Manteniment opcional: 49 €/mes</span><span>Llesta en 4–6 setmanes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Ecommerce">Vull aquest paquet</a>
+              <ul><li>Catàleg il·limitat amb variants i estoc</li><li>Enviaments amb tarifes per zona</li><li>Comptes de client, cupons i descomptes</li><li>Factures i correus automàtics</li><li>Connexió amb Google Shopping i Meta</li><li>Panell de gestió fet per a la teva botiga</li><li>Sense quotes mensuals de plataforma</li></ul>
+            </div>
           </article>
           <article class="pk" style="--i:3">
-            <h3>Aplicació web</h3>
-            <p class="pk-d">Programari a mida que funciona al navegador, des de qualsevol dispositiu.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="800">800 €</span><span class="pk-u">pagament únic</span></div>
-            <div class="pk-meta"><span>Manteniment opcional: 79 €/mes</span><span>Llesta en 8–12 setmanes</span></div>
-            <ul><li>Anàlisi del procés i prototip navegable</li><li>Usuaris, rols i permisos</li><li>Base de dades i panell de gestió</li><li>Integració amb facturació, ERP o altres eines</li><li>Informes i exportació de dades</li><li>El codi és teu</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Una empresa de manteniment que vol gestionar avisos, tècnics i albarans des del mòbil, en temps real.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Programari a mida">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lligacat.github.io/jornal/" target="_blank" rel="noopener"><img src="img/ex-jornal.jpg" alt="Aplicació web Jornal" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Jornal</b></span></a>
+            <div class="pk-body">
+              <h3>Aplicació web</h3>
+              <p class="pk-d">Programari a mida que funciona al navegador, des de qualsevol dispositiu.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="800">800 €</span><span class="pk-u">pagament únic</span></div>
+              <div class="pk-meta"><span>Manteniment opcional: 79 €/mes</span><span>Llesta en 8–12 setmanes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Programari a mida">Vull aquest paquet</a>
+              <ul><li>Anàlisi del procés i prototip navegable</li><li>Usuaris, rols i permisos</li><li>Base de dades i panell de gestió</li><li>Integració amb facturació, ERP o altres eines</li><li>Informes i exportació de dades</li><li>El codi és teu</li></ul>
+            </div>
           </article>
         </div>
       </div>
@@ -934,32 +979,38 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
       <div class="pk-panel rv" id="pk-xarxes" role="tabpanel" hidden>
         <div class="pk-grid">
           <article class="pk" style="--i:0">
-            <h3>Xarxes amb IA</h3>
-            <p class="pk-d">Publicacions fetes amb intel·ligència artificial d'alt rendiment i revisades per un dissenyador gràfic.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="150" data-x="20">150 €</span><span class="pk-u">/mes</span></div>
-            <div class="pk-meta"><span>Gestió semiautomatitzada</span><span>Sense permanència</span></div>
-            <ul><li>12 publicacions al mes</li><li>Imatges i textos generats amb IA</li><li>Revisió de cada peça per un dissenyador gràfic</li><li>Calendari mensual que aproves tu</li><li>Programació automàtica de les publicacions</li><li>Informe mensual de resultats</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Una perruqueria que vol publicar cada setmana sense dedicar-hi ni una hora.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+            <div class="pk-ex"><img src="img/ex-insta.jpg" alt="Publicació de llançament d'MNA LABS a Instagram" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Instagram d'MNA LABS</b></span></div>
+            <div class="pk-body">
+              <h3>Disseny gràfic i fotos d'stock</h3>
+              <p class="pk-d">Publicacions amb disseny gràfic professional i fotos d'stock d'alta qualitat.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="150" data-x="20">150 €</span><span class="pk-u">/mes</span></div>
+              <div class="pk-meta"><span>Gestió semiautomatitzada</span><span>Sense permanència</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+              <ul><li>12 publicacions al mes</li><li>Disseny gràfic a mida per a cada publicació</li><li>Fotos d'stock d'alta qualitat amb llicència</li><li>Textos pensats per a cada xarxa</li><li>Calendari mensual que aproves tu</li><li>Programació automàtica de les publicacions</li><li>Informe mensual de resultats</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
+            </div>
           </article>
           <article class="pk top" style="--i:1">
-            <span class="pk-tag">El més demanat</span>
-            <h3>Xarxes mixtes</h3>
-            <p class="pk-d">Contingut audiovisual real, gravat a la teva empresa, combinat amb IA.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="200" data-x="20">200 €</span><span class="pk-u">/mes</span></div>
-            <div class="pk-meta"><span>Mitja jornada de rodatge al mes</span><span>Sense permanència</span></div>
-            <ul><li>Una sessió mensual de vídeo i fotografia</li><li>4 reels editats amb imatges reals</li><li>12 publicacions entre material real i IA</li><li>Stories setmanals</li><li>Revisió de dissenyador gràfic</li><li>Informe mensual de resultats</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Un gimnàs que vol ensenyar les instal·lacions, les classes i l'equip de debò.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lligacat.github.io/alda/" target="_blank" rel="noopener"><img src="img/ex-alda-reel.jpg" alt="Fotograma del reel de Mecanitzats ALDA" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>Reel de Mecanitzats ALDA</b></span></a>
+            <div class="pk-body">
+              <span class="pk-tag">El més demanat</span>
+              <h3>Xarxes mixtes</h3>
+              <p class="pk-d">Contingut audiovisual real, gravat a la teva empresa, combinat amb IA.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="200" data-x="20">200 €</span><span class="pk-u">/mes</span></div>
+              <div class="pk-meta"><span>Mitja jornada de rodatge al mes</span><span>Sense permanència</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+              <ul><li>Una sessió mensual de vídeo i fotografia</li><li>4 reels editats amb imatges reals</li><li>12 publicacions entre material real i IA</li><li>Stories setmanals</li><li>Revisió de dissenyador gràfic</li><li>Informe mensual de resultats</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
+            </div>
           </article>
           <article class="pk" style="--i:2">
-            <h3>Xarxes full real</h3>
-            <p class="pk-d">Tot gravat i fotografiat per professionals. Sense IA a la imatge.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="1000" data-x="20">1.000 €</span><span class="pk-u">/mes</span></div>
-            <div class="pk-meta"><span>Dues jornades de rodatge al mes</span><span>Sense permanència</span></div>
-            <ul><li>Guions i planificació de continguts</li><li>8 reels amb edició professional</li><li>16 publicacions amb fotografia pròpia</li><li>Stories diàries</li><li>Gestió de comentaris i missatges</li><li>Reunió i informe mensual</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Un hotel rural que vol transmetre l'experiència real de les estades i omplir els caps de setmana.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+            <div class="pk-ex none"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span class="pk-ex-c"><small>Exemple real</small><b>Ben aviat</b></span></div>
+            <div class="pk-body">
+              <h3>Xarxes full real</h3>
+              <p class="pk-d">Tot gravat i fotografiat per professionals. Sense IA a la imatge.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="1000" data-x="20">1.000 €</span><span class="pk-u">/mes</span></div>
+              <div class="pk-meta"><span>Dues jornades de rodatge al mes</span><span>Sense permanència</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Xarxes socials">Vull aquest paquet</a>
+              <ul><li>Guions i planificació de continguts</li><li>8 reels amb edició professional</li><li>16 publicacions amb fotografia pròpia</li><li>Stories diàries</li><li>Gestió de comentaris i missatges</li><li>Reunió i informe mensual</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
+            </div>
           </article>
         </div>
       </div>
@@ -967,30 +1018,36 @@ footer{background:var(--black);color:var(--on-night-2);font-size:13px;line-heigh
       <div class="pk-panel rv" id="pk-combinats" role="tabpanel" hidden>
         <div class="pk-grid">
           <article class="pk" style="--i:0">
-            <h3>Web + app</h3>
-            <p class="pk-d">La teva web i la teva app per a iOS i Android, connectades entre elles.</p>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="4000">4.000 €</span><span class="pk-u">pagament únic</span></div>
-            <div class="pk-meta"><span>Manteniment opcional: 99 €/mes</span><span>Llesta en 10–14 setmanes</span></div>
-            <ul><li>Web informativa o amb compres</li><li>App per a iOS i Android publicada a les botigues</li><li>Un sol compte d'usuari per a web i app</li><li>Notificacions push</li><li>Pagaments dins l'app</li><li>Panell de gestió compartit</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Un club esportiu on els socis reserven pista des de l'app o la web, amb el mateix compte.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="App mòbil">Vull aquest paquet</a>
+            <a class="pk-ex" href="https://lliga.cat/" target="_blank" rel="noopener"><img src="img/ex-lligacat.jpg" alt="Web i app de lliga.cat" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>lliga.cat</b></span></a>
+            <div class="pk-body">
+              <h3>Web + app</h3>
+              <p class="pk-d">La teva web i la teva app per a iOS i Android, connectades entre elles.</p>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="4000">4.000 €</span><span class="pk-u">pagament únic</span></div>
+              <div class="pk-meta"><span>Manteniment opcional: 99 €/mes</span><span>Llesta en 10–14 setmanes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="App mòbil">Vull aquest paquet</a>
+              <ul><li>Web informativa o amb compres</li><li>App per a iOS i Android publicada a les botigues</li><li>Un sol compte d'usuari per a web i app</li><li>Notificacions push</li><li>Pagaments dins l'app</li><li>Panell de gestió compartit</li></ul>
+            </div>
           </article>
           <article class="pk top pk-combo" style="--i:1" data-opt="ia">
-            <span class="pk-tag">El més demanat</span>
-            <h3>Web + xarxes</h3>
-            <p class="pk-d">Presència completa des del primer dia, amb la mateixa imatge a tot arreu.</p>
-            <div class="pk-opts" role="group" aria-label="Tria les xarxes"><button type="button" data-o="ia" aria-pressed="true">IA</button><button type="button" data-o="mix" aria-pressed="false">Mixtes</button><button type="button" data-o="real" aria-pressed="false">Full real</button></div>
-            <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="350">350 €</span><span class="pk-u">web</span></div>
-            <div class="pk-p sm"><span class="pk-from">+</span><span class="pk-n" id="pkComboM" data-v="150" data-x="20">150 €</span><span class="pk-u">/mes</span></div>
-            <div class="pk-meta"><span>Estalvies 150 € a la web</span><span>Permanència de 6 mesos a les xarxes</span></div>
-            <ul><li>Web informativa completa</li><li data-o="ia">Paquet Xarxes amb IA</li><li data-o="mix">Paquet Xarxes mixtes</li><li data-o="real">Paquet Xarxes full real</li><li>Imatge coherent entre web i xarxes</li><li>Biografies i enllaços optimitzats</li><li>Estadístiques de web i xarxes en un sol informe</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
-            <div class="pk-ex"><b>Exemple</b>Una botiga de roba que obre local i necessita ser visible des del primer dia.</div>
-            <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+            <a class="pk-ex" href="#top"><img src="img/ex-mnalabs.jpg" alt="Web d'MNA LABS" loading="lazy" width="640" height="400"><span class="pk-ex-c"><small>Exemple real</small><b>MNA LABS: web i Instagram</b></span></a>
+            <div class="pk-body">
+              <span class="pk-tag">El més demanat</span>
+              <h3>Web + xarxes</h3>
+              <p class="pk-d">Presència completa des del primer dia, amb la mateixa imatge a tot arreu.</p>
+              <div class="pk-opts" role="group" aria-label="Tria les xarxes"><button type="button" data-o="ia" aria-pressed="true">Disseny</button><button type="button" data-o="mix" aria-pressed="false">Mixtes</button><button type="button" data-o="real" aria-pressed="false">Full real</button></div>
+              <div class="pk-p"><span class="pk-from">des de</span><span class="pk-n" data-v="350">350 €</span><span class="pk-u">web</span></div>
+              <div class="pk-p sm"><span class="pk-from">+</span><span class="pk-n" id="pkComboM" data-v="150" data-x="20">150 €</span><span class="pk-u">/mes</span></div>
+              <div class="pk-meta"><span>Estalvies 150 € a la web</span><span>Permanència de 6 mesos a les xarxes</span></div>
+              <a href="#contacte" class="btn" data-pk data-tipus="Web">Vull aquest paquet</a>
+              <ul><li>Web informativa completa</li><li data-o="ia">Paquet Disseny gràfic i fotos d'stock</li><li data-o="mix">Paquet Xarxes mixtes</li><li data-o="real">Paquet Xarxes full real</li><li>Imatge coherent entre web i xarxes</li><li>Biografies i enllaços optimitzats</li><li>Estadístiques de web i xarxes en un sol informe</li><li>Instagram i Facebook</li><li class="pk-all">+ TikTok, LinkedIn, YouTube, X, Pinterest i Google Business</li></ul>
+            </div>
           </article>
           <article class="pk alt" style="--i:2">
-            <h3>Necessites una altra combinació?</h3>
-            <p class="pk-d">Combinem qualsevol paquet i l'ajustem al teu negoci. També ho pots fer amb Free Developing, sense pagar ara.</p>
-            <a href="#contacte" class="btn">Parlem-ne</a>
+            <div class="pk-body">
+              <h3>Necessites una altra combinació?</h3>
+              <p class="pk-d">Combinem qualsevol paquet i l'ajustem al teu negoci. També ho pots fer amb Free Developing, sense pagar ara.</p>
+              <a href="#contacte" class="btn">Parlem-ne</a>
+            </div>
           </article>
         </div>
       </div>
@@ -1342,7 +1399,13 @@ es: {
 "Servidors a Europa":"Servidores en Europa","Allotjament a la Unió Europea i còpies de seguretat amb proveïdors que compleixen el RGPD.":"Alojamiento en la Unión Europea y copias de seguridad con proveedores que cumplen el RGPD.",
 "Tot en regla des de l'inici":"Todo en regla desde el inicio","Textos legals, consentiments, registre d'activitats i contractes d'encàrrec de tractament.":"Textos legales, consentimientos, registro de actividades y contratos de encargo de tratamiento.",
 "Fitxa de client":"Ficha de cliente","Dades en clar":"Datos en claro","Xifrat":"Cifrado","Nom":"Nombre","Correu":"Correo","Telèfon":"Teléfono","Adreça":"Dirección","Targeta":"Tarjeta",
-"Animació: les dades d'un client es xifren":"Animación: los datos de un cliente se cifran"
+"Animació: les dades d'un client es xifren":"Animación: los datos de un cliente se cifran",
+"Tria el teu paquet.":"Elige tu paquete.","Preus clars i un exemple real de cada paquet. El pressupost final el tanquem amb tu per escrit.":"Precios claros y un ejemplo real de cada paquete. El presupuesto final lo cerramos contigo por escrito.",
+"Exemple real":"Ejemplo real","Instagram d'MNA LABS":"Instagram de MNA LABS","Ben aviat":"Muy pronto","MNA LABS: web i Instagram":"MNA LABS: web e Instagram",
+"Ven serveis, reserves o encàrrecs des de la teva web.":"Vende servicios, reservas o encargos desde tu web.",
+"Disseny gràfic i fotos d'stock":"Diseño gráfico y fotos de stock","Publicacions amb disseny gràfic professional i fotos d'stock d'alta qualitat.":"Publicaciones con diseño gráfico profesional y fotos de stock de alta calidad.",
+"Disseny gràfic a mida per a cada publicació":"Diseño gráfico a medida para cada publicación","Fotos d'stock d'alta qualitat amb llicència":"Fotos de stock de alta calidad con licencia","Textos pensats per a cada xarxa":"Textos pensados para cada red",
+"Disseny":"Diseño","Paquet Disseny gràfic i fotos d'stock":"Paquete Diseño gráfico y fotos de stock","Menú":"Menú"
 },
 en: {
 "Serveis":"Services","Programari":"Software","Emprenedoria":"Entrepreneurship","Projectes":"Projects","Contacte":"Contact","Comencem":"Get started",
@@ -1495,7 +1558,13 @@ en: {
 "Servidors a Europa":"Servers in Europe","Allotjament a la Unió Europea i còpies de seguretat amb proveïdors que compleixen el RGPD.":"Hosting in the European Union and backups with GDPR-compliant providers.",
 "Tot en regla des de l'inici":"Compliant from the start","Textos legals, consentiments, registre d'activitats i contractes d'encàrrec de tractament.":"Legal pages, consent, records of processing and data processing agreements.",
 "Fitxa de client":"Customer record","Dades en clar":"Plain text","Xifrat":"Encrypted","Nom":"Name","Correu":"Email","Telèfon":"Phone","Adreça":"Address","Targeta":"Card",
-"Animació: les dades d'un client es xifren":"Animation: a customer's data being encrypted"
+"Animació: les dades d'un client es xifren":"Animation: a customer's data being encrypted",
+"Tria el teu paquet.":"Choose your package.","Preus clars i un exemple real de cada paquet. El pressupost final el tanquem amb tu per escrit.":"Clear prices and a real example of every package. We agree the final quote with you in writing.",
+"Exemple real":"Real example","Instagram d'MNA LABS":"MNA LABS on Instagram","Reel de Mecanitzats ALDA":"Mecanitzats ALDA reel","Ben aviat":"Coming soon","MNA LABS: web i Instagram":"MNA LABS: website and Instagram",
+"Ven serveis, reserves o encàrrecs des de la teva web.":"Sell services, bookings or orders from your website.",
+"Disseny gràfic i fotos d'stock":"Graphic design and stock photos","Publicacions amb disseny gràfic professional i fotos d'stock d'alta qualitat.":"Posts with professional graphic design and high-quality stock photos.",
+"Disseny gràfic a mida per a cada publicació":"Custom graphic design for every post","Fotos d'stock d'alta qualitat amb llicència":"Licensed high-quality stock photos","Textos pensats per a cada xarxa":"Copy written for each platform",
+"Disseny":"Design","Paquet Disseny gràfic i fotos d'stock":"Graphic design and stock photos package","Menú":"Menu"
 }
 };
 </script>
@@ -1582,7 +1651,7 @@ en: {
       o[0] *= .92; o[1] *= .92;
       const al = lerp(.06 + depth*depth*.85, .92, mi) * (ii*.85 + .15);
       const sz = lerp((.7 + depth*1.4)*f, small ? 1.5 : 1.8, mi);
-      ctx.fillStyle = (i % 13 === 0 && mi > .5) ? `rgba(63,212,177,${al})` : `rgba(245,245,247,${al})`;
+      ctx.fillStyle = (i % 13 === 0 && mi > .5) ? `rgba(167,150,255,${al})` : `rgba(245,245,247,${al})`;
       ctx.fillRect(x + o[0], y + o[1], sz, sz);
     }
   }
@@ -1599,23 +1668,23 @@ en: {
     for (let i = 0; i < 30; i++){ const v = 95 - i*1.6 - Math.sin(i*.7)*14 - Math.sin(i*1.9)*7 + Math.cos(i*.33)*6; pts.push([i*(600/29), v + 20]); }
     let dl = `M${pts[0][0]},${pts[0][1]}`;
     for (let i = 1; i < pts.length; i++){ const [x0,y0] = pts[i-1], [x1,y1] = pts[i], cxp = (x0+x1)/2; dl += ` C${cxp},${y0} ${cxp},${y1} ${x1},${y1}`; }
-    svg.innerHTML = `<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a8f72" stop-opacity=".22"/><stop offset="1" stop-color="#0a8f72" stop-opacity="0"/></linearGradient></defs>
+    svg.innerHTML = `<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b4eff" stop-opacity=".22"/><stop offset="1" stop-color="#6b4eff" stop-opacity="0"/></linearGradient></defs>
       ${[40,90,140].map(y => `<line class="gl" x1="0" x2="600" y1="${y}" y2="${y}"/>`).join('')}
       <path class="ar" d="${dl} L600,180 L0,180 Z" fill="url(#ga)"/>
       <path class="ln" id="ln" d="${dl}"/>
-      <circle id="lnDot" r="4.5" fill="#0a8f72" stroke="#fff" stroke-width="2" cx="${pts[29][0]}" cy="${pts[29][1]}" opacity="0"/>`;
+      <circle id="lnDot" r="4.5" fill="#6b4eff" stroke="#fff" stroke-width="2" cx="${pts[29][0]}" cy="${pts[29][1]}" opacity="0"/>`;
     const ln = document.getElementById('ln'), L = ln.getTotalLength();
     ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L;
     ln.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(.16,1,.3,1)';
   })();
   const feedPool = [
     ['#30d158','Pagament rebut','Tallers Puig · 318,50 €'],
-    ['#0a8f72','Nova comanda','#10483 · Metall Girona'],
+    ['#6b4eff','Nova comanda','#10483 · Metall Girona'],
     ['#ff9f0a','Estoc baix','Sorra PetroBond 5 kg · 8 unitats'],
-    ['#0a8f72','Factura emesa','F-2026-0912 · enviada per correu'],
+    ['#6b4eff','Factura emesa','F-2026-0912 · enviada per correu'],
     ['#30d158','Enviament lliurat','#10476 · Fundició del Vallès'],
     ['#7fd8c4','Client nou','Registrat des de l\'app'],
-    ['#0a8f72','Sincronització','Comptabilitat actualitzada'],
+    ['#6b4eff','Sincronització','Comptabilitat actualitzada'],
   ];
   let feedI = 0; const feed = document.getElementById('feed');
   function pushFeed(){
@@ -1689,7 +1758,7 @@ en: {
       edges.push({ path, L });
       for (let k = 0; k < 2; k++){
         const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', 3.6);
-        const back = k === 1; c.setAttribute('fill', back ? '#f5f5f7' : '#3fd4b1');
+        const back = k === 1; c.setAttribute('fill', back ? '#f5f5f7' : '#a796ff');
         if (!back) c.setAttribute('filter', 'url(#glow)');
         gP.append(c); packets.push({ c, path, L, back, sp: .28 + Math.random()*.22, ph: Math.random() });
       }
@@ -1745,10 +1814,36 @@ en: {
     entLis.forEach(li => li.classList.toggle('on', li.getBoundingClientRect().top + 16 < line));
   }
 
+  /* =============== MENÚ: apartat actiu, indicador i menú mòbil =============== */
+  const navEl = document.getElementById('nav'), navInd = document.getElementById('navInd'), navBurger = document.getElementById('navBurger');
+  const navAs = [...document.querySelectorAll('#navLinks a')].map(a => [a, document.querySelector(a.getAttribute('href'))]).filter(x => x[1]);
+  let navOn = null, navHover = null;
+  function navMove(){
+    const a = navHover || navOn;
+    if (!a){ navInd.style.opacity = 0; return; }
+    navInd.style.opacity = 1; navInd.style.width = a.offsetWidth + 'px'; navInd.style.transform = `translateX(${a.offsetLeft}px)`;
+  }
+  function navActive(){
+    // l'apartat del menú que ha passat més recentment per sobre del 35% de la pantalla, si encara s'hi veu
+    const th = innerHeight * .35;
+    let on = null, best = -Infinity;
+    for (const [a, sec] of navAs){ const r = sec.getBoundingClientRect(); if (r.top < th && r.top > best){ best = r.top; on = r.bottom > th ? a : null; } }
+    if (on === navOn) return;
+    if (navOn) navOn.classList.remove('on');
+    navOn = on; if (on) on.classList.add('on');
+    navMove();
+  }
+  navAs.forEach(([a]) => {
+    a.addEventListener('pointerenter', () => { navHover = a; navMove(); });
+    a.addEventListener('pointerleave', () => { navHover = null; navMove(); });
+    a.addEventListener('click', () => { navEl.classList.remove('open'); navBurger.setAttribute('aria-expanded', 'false'); });
+  });
+  navBurger.addEventListener('click', () => { const o = navEl.classList.toggle('open'); navBurger.setAttribute('aria-expanded', String(o)); });
+
   /* =============== BUCLE PRINCIPAL =============== */
-  const navEl = document.getElementById('nav');
   function frame(now){
-    navEl.classList.toggle('on-dark', hero.getBoundingClientRect().bottom > 48);
+    navEl.classList.toggle('on-dark', hero.getBoundingClientRect().bottom > 40);
+    navActive();
     const docH = document.documentElement.scrollHeight - innerHeight;
     navProg.style.transform = `scaleX(${clamp(scrollY / docH)})`;
     if (onScreen(hero)) drawHero(now);
@@ -1861,7 +1956,7 @@ en: {
       const k = clamp(p * 1.5 - i * .1), n = Math.round(k * row.p.length), mid = k > 0 && n < row.p.length ? rnd() : '';
       row.d.innerHTML = `<i>${row.c.slice(0, n)}${mid}</i>${row.p.slice(n + mid.length)}`;
     });
-    const locked = p >= 1;
+    const locked = p * 1.5 - (vRows.length - 1) * .1 >= 1;
     vault.classList.toggle('locked', locked);
     vState.textContent = tr(locked ? 'Xifrat' : 'Dades en clar');
   }
@@ -1926,7 +2021,7 @@ en: {
     feed.innerHTML = ''; for (let i = 0; i < 4; i++) pushFeed();
     if (dashStarted) dash.querySelectorAll('[data-count]').forEach(el => el.textContent = (+el.dataset.count).toLocaleString(LOC()) + (el.dataset.suf || ''));
     if (termDone){ termLang = null; termStatic(); }
-    pkPrices(); drawVault();
+    pkPrices(); drawVault(); navMove();
     layoutH();
     try { localStorage.setItem('mna-lang', l); } catch (_) {}
   }
