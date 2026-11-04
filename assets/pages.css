@@ -255,6 +255,13 @@ body[data-page="free-developing"] #free-developing{margin-top:-68px;padding-top:
 .mk-ap em{margin-top:auto;font-style:normal;text-align:center;background:#1d1d1f;color:#fff;border-radius:3cqw;padding:1.1cqw}
 @media (prefers-reduced-motion:reduce){.mk-film i,.mk-pb i,.mk-ig .new{animation:none}}
 
+.pk-combo li[data-o]{display:none}
+.pk-combo li[data-o].on{display:flex}
+.pk-app .rv{opacity:1;transform:none}
+.pkgs[data-extra] .pk-switch,.pkgs[data-maint] .pk-maint{display:flex}
+.pkgs[data-maint] .pk-maint{display:grid}
+.pkgs[data-extra="false"] .pk-switch,.pkgs[data-maint="false"] .pk-maint{display:none}
+
 /* exemples dels paquets */
 .pk-ex{aspect-ratio:16/10;background:linear-gradient(160deg,#f1f2f6,#e2e5ec)}
 .pk-ex::after{inset:58% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.6))}
@@ -263,6 +270,19 @@ body[data-page="free-developing"] #free-developing{margin-top:-68px;padding-top:
 .pk-ex .mock[data-mock="duo"]{left:7%;right:7%;top:9%}
 .pk:hover .pk-ex .mock{transform:translateY(-2%)}
 .pk-ex .mock:is([data-mock="ig"],[data-mock="reel"]){transform:none}
+
+/* ---------- CONTACTE: l'equip i el formulari ---------- */
+.ct-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,6vw,96px);align-items:start}
+.ct-team .sub{color:var(--ink-2);margin-top:20px;max-width:34ch}
+.ct-photo{margin:40px 0 0;border-radius:24px;overflow:hidden;background:var(--white);box-shadow:0 0 0 1px var(--line-2)}
+.ct-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.ct-photo figcaption{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 24px}
+.ct-photo figcaption div:last-child{text-align:right}
+.ct-photo b{display:block;font-size:17px;font-weight:600}
+.ct-photo span{font-size:14px;color:var(--ink-2)}
+.ct-form{position:sticky;top:96px;background:var(--white);border-radius:24px;padding:clamp(24px,3vw,40px);box-shadow:0 0 0 1px var(--line-2)}
+.ct-form form{margin-top:0}
+@media (max-width:900px){.ct-grid{grid-template-columns:1fr}.ct-form{position:static}}
 
 /* ---------- PEU ---------- */
 .foot{padding:clamp(88px,11vw,160px) 0 28px;font-size:14px}

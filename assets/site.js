@@ -489,10 +489,11 @@
       <div class="mk-rc"><b>${esc(d.handle)}</b><p>${esc(d.t)}</p></div><div class="mk-side"><span>♥<small>${esc(d.likes)}</small></span><span>↗</span></div><div class="mk-pb"><i></i></div></div></div>`,
     duo: d => `<div class="mk-duo"><div class="mk-win">${MOCK[d.base](d)}</div>${d.side === 'ig' ? MOCK.ig(d) : `<div class="mk-phone"><div class="mk-scr mk-ap" style="--c1:${d.c1}"><b>${esc(d.brand)}</b><div class="mk-slot">${esc(d.a1)}</div><div class="mk-slot on">${esc(d.a2)}</div><div class="mk-slot">${esc(d.a3)}</div><em>${esc(d.btn)}</em></div></div>`}</div>`,
   };
-  $$('.mock[data-mock]').forEach(el => {
+  function buildMocks(root){ $$('.mock[data-mock]', root).forEach(el => {
     const d = el.dataset; el.innerHTML = MOCK[d.mock](d); el.setAttribute('aria-hidden', 'true');
     ['c1', 'c2', 'c3'].forEach(k => { if (d[k]) el.style.setProperty('--' + k, d[k]); });
-  });
+  }); }
+  buildMocks(document);
   // petites animacions en bucle: la cistella es va omplint i l'estat de les tasques canvia
   if (!reduce) setInterval(() => {
     $$('.mock[data-mock="shop"], .mock .mk-win').forEach(m => {
@@ -509,16 +510,56 @@
     });
   }, 2200);
 
-  /* =============== PAQUETS =============== */
+  /* =============== PAQUETS: es pinten des de les dades (Supabase si està configurat; si no, paquets-dades.js) =============== */
   const pkgs = $('#paquets');
   let pkPrices = () => {};
-  if (pkgs){
-    const pkAll = $('#pkAll'), pkTabs = $$('[role=tab]', pkgs), pkPanels = $$('.pk-panel', pkgs);
+  if (pkgs && $('#pkApp')){
+    const app = $('#pkApp'), CFG = window.MNA_CONFIG || {};
+    const L = t => !t ? '' : typeof t === 'string' ? t : (t[LANG] || t.ca || '');
+    const UNIT = { unic: 'pagament únic', mes: '/mes', web: 'web' };
+    let DATA = window.PAQUETS_DEFAULT, tab = null;
     const money = v => new Intl.NumberFormat(LOC(), { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
-    // l'opció "totes les plataformes" suma data-x als preus de xarxes; anim fa pujar el número
+    const price = (p, cls) => `<div class="pk-p${cls || ''}"><span class="pk-from">${cls ? '+' : esc(tr('des de'))}</span><span class="pk-n" data-v="${+p.preu || 0}"${p.extra ? ` data-x="${+DATA.plataformes.preu || 0}"` : ''}>${money(+p.preu || 0)}</span><span class="pk-u">${esc(tr(UNIT[p.unitat] || ''))}</span></div>`;
+    const card = (p, i, sec) => {
+      if (p.tipus === 'alt') return `<article class="pk alt" style="--i:${i}"><div class="pk-body"><h3>${esc(L(p.nom))}</h3><p class="pk-d">${esc(L(p.desc))}</p><a href="contacte.html" class="btn">${esc(L(p.boto))}</a></div></article>`;
+      const m = (p.exemple && p.exemple.maqueta) || {}, opts = p.opcions || [];
+      const mock = m.mock ? `<div class="mock" ${Object.entries(m).map(([k, v]) => `data-${k.replace(/[A-Z]/g, c => '-' + c.toLowerCase())}="${esc(String(v))}"`).join(' ')}></div>` : '';
+      const p2 = p.preu2 ? { ...p.preu2, preu: opts.length ? opts[0].preu : p.preu2.preu } : null;
+      const extra = p.extra || (p2 && p2.extra);
+      return `<article class="pk${p.recomanat ? ' top' : ''}${opts.length ? ' pk-combo' : ''}" style="--i:${i}" data-id="${esc(p.id)}">
+        <div class="pk-ex">${mock}<span class="pk-ex-c"><small>${esc(tr('Exemple'))}</small><b>${esc(p.exemple ? p.exemple.marca : '')}</b></span></div>
+        <div class="pk-body">
+          ${p.recomanat ? `<span class="pk-tag">${esc(tr('Recomanat'))}</span>` : ''}
+          <h3>${esc(L(p.nom))}</h3>
+          <p class="pk-d">${esc(L(p.desc))}</p>
+          ${opts.length ? `<div class="pk-opts" role="group" aria-label="${esc(tr('Tria les xarxes'))}">${opts.map((o, j) => `<button type="button" data-o="${j}" aria-pressed="${j === 0}">${esc(L(o.etiqueta))}</button>`).join('')}</div>` : ''}
+          ${price(p)}${p2 ? price(p2, ' sm') : ''}
+          <div class="pk-meta">${(p.meta || []).map(t => `<span>${esc(L(t))}</span>`).join('')}</div>
+          <a class="btn" data-pk data-tipus="${esc(p.tipus || 'Web')}" href="contacte.html">${esc(tr('Vull aquest paquet'))}</a>
+          <ul>${(p.inclou || []).map(t => `<li>${esc(L(t))}</li>`).join('')}${opts.map((o, j) => `<li data-o="${j}"${j === 0 ? ' class="on"' : ''}>${esc(L(o.linia))}</li>`).join('')}${extra ? `<li class="pk-all">${esc(L(DATA.plataformes.linia))}</li>` : ''}</ul>
+        </div></article>`;
+    };
+    const render = () => {
+      const D = DATA, secs = D.seccions || [];
+      if (!tab || !secs.some(s => s.id === tab)) tab = (secs.find(s => s.id === location.hash.slice(1)) || secs[0] || {}).id;
+      const all = pkgs.classList.contains('all');
+      app.innerHTML = `
+        <div class="pk-bar rv in">
+          <div class="pk-tabs" role="tablist" aria-label="${esc(tr('Tipus de paquet'))}">${secs.map(s => `<button type="button" role="tab" data-tab="${esc(s.id)}" aria-controls="pk-${esc(s.id)}" aria-selected="${s.id === tab}" tabindex="${s.id === tab ? 0 : -1}">${esc(L(s.nom))}</button>`).join('')}</div>
+          <label class="pk-switch"><input type="checkbox" id="pkAll"${all ? ' checked' : ''}><span class="sw" aria-hidden="true"></span><span><b>${esc(L(D.plataformes.titol))}</b><span>${esc(L(D.plataformes.text))}</span></span></label>
+        </div>
+        ${secs.map(s => `<div class="pk-panel rv in" id="pk-${esc(s.id)}" role="tabpanel" data-extra="${!!s.extra}"${s.id === tab ? '' : ' hidden'}><div class="pk-grid">${(s.paquets || []).map((p, i) => card(p, i, s)).join('')}</div></div>`).join('')}
+        <div class="pk-maint rv in"><div><b>${esc(L(D.manteniment.titol))}</b><p>${esc(L(D.manteniment.text))}</p></div><ul>${(D.manteniment.items || []).map(t => `<li>${esc(L(t))}</li>`).join('')}</ul></div>
+        <p class="pk-note rv in">${esc(L(D.nota))}</p>`;
+      flags(secs.find(s => s.id === tab));
+      buildMocks(app);
+      bind();
+      pkPrices();
+    };
     pkPrices = anim => {
-      $$('.pk-n', pkgs).forEach(el => {
-        const to = +el.dataset.v + (pkAll && pkAll.checked ? +(el.dataset.x || 0) : 0), from = +(el.dataset.now || to);
+      const on = $('#pkAll', app);
+      $$('.pk-n', app).forEach(el => {
+        const to = +el.dataset.v + (on && on.checked ? +(el.dataset.x || 0) : 0), from = +(el.dataset.now || to);
         el.dataset.now = to;
         if (!anim || reduce || from === to){ el.textContent = money(to); return; }
         const t0 = performance.now();
@@ -526,34 +567,49 @@
         requestAnimationFrame(step);
       });
     };
-    pkPrices(); onLang.push(() => pkPrices());
-    if (pkAll) pkAll.addEventListener('change', () => { pkgs.classList.toggle('all', pkAll.checked); pkPrices(true); });
+    // cada secció decideix si mostra l'opció de totes les plataformes i el requadre de manteniment
+    const flags = sec => { pkgs.dataset.tab = sec ? sec.id : ''; pkgs.dataset.extra = !!(sec && sec.extra); pkgs.dataset.maint = !!(sec && sec.manteniment); };
     const showTab = id => {
-      const b = pkTabs.find(t => t.dataset.tab === id); if (!b) return;
-      pkgs.dataset.tab = id;
-      pkTabs.forEach(t => { t.setAttribute('aria-selected', String(t === b)); t.tabIndex = t === b ? 0 : -1; });
-      pkPanels.forEach(p => { const on = p.id === 'pk-' + id; p.hidden = !on; if (on){ p.classList.remove('in'); void p.offsetWidth; p.classList.add('in'); } });
+      const tabs = $$('[role=tab]', app), b = tabs.find(t => t.dataset.tab === id); if (!b) return;
+      tab = id;
+      flags((DATA.seccions || []).find(s => s.id === id));
+      tabs.forEach(t => { t.setAttribute('aria-selected', String(t === b)); t.tabIndex = t === b ? 0 : -1; });
+      $$('.pk-panel', app).forEach(p => { const on = p.id === 'pk-' + id; p.hidden = !on; if (on){ p.classList.remove('in'); void p.offsetWidth; p.classList.add('in'); } });
     };
-    pkTabs.forEach((b, i) => {
-      b.addEventListener('click', () => { showTab(b.dataset.tab); history.replaceState(null, '', '#' + b.dataset.tab); });
-      b.addEventListener('keydown', e => { const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return; const n = pkTabs[(i + d + pkTabs.length) % pkTabs.length]; n.focus(); n.click(); });
-    });
-    const fromHash = () => { const h = location.hash.slice(1); if (pkTabs.some(t => t.dataset.tab === h)) showTab(h); };
-    fromHash(); addEventListener('hashchange', fromHash);
-    const combo = $('.pk-combo', pkgs);
-    if (combo){
-      const comboM = $('#pkComboM'), COMBO = { ia: 150, mix: 200, real: 1000 };
-      $$('.pk-opts button', combo).forEach(b => b.addEventListener('click', () => {
-        combo.dataset.opt = b.dataset.o; comboM.dataset.v = COMBO[b.dataset.o];
-        $$('.pk-opts button', combo).forEach(o => o.setAttribute('aria-pressed', String(o === b)));
-        pkPrices(true);
-      }));
+    function bind(){
+      const tabs = $$('[role=tab]', app);
+      tabs.forEach((b, i) => {
+        b.addEventListener('click', () => { showTab(b.dataset.tab); history.replaceState(null, '', '#' + b.dataset.tab); });
+        b.addEventListener('keydown', e => { const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return; const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); });
+      });
+      const all = $('#pkAll', app);
+      all.addEventListener('change', () => { pkgs.classList.toggle('all', all.checked); pkPrices(true); });
+      $$('.pk-combo', app).forEach(c => {
+        const p = (DATA.seccions || []).flatMap(s => s.paquets || []).find(x => x.id === c.dataset.id);
+        $$('.pk-opts button', c).forEach(b => b.addEventListener('click', () => {
+          const j = +b.dataset.o, n = $('.pk-p.sm .pk-n', c);
+          if (n) n.dataset.v = p.opcions[j].preu;
+          $$('.pk-opts button', c).forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+          $$('li[data-o]', c).forEach(li => li.classList.toggle('on', +li.dataset.o === j));
+          pkPrices(true);
+        }));
+      });
+      // el botó porta al formulari amb el paquet ja triat
+      $$('[data-pk]', app).forEach(a => { a.href = `contacte.html?tipus=${encodeURIComponent(a.dataset.tipus)}&paquet=${encodeURIComponent(a.closest('.pk').querySelector('h3').textContent.trim())}`; });
     }
-    // el botó porta al formulari amb el paquet ja triat
-    $$('[data-pk]', pkgs).forEach(a => {
-      const set = () => { a.href = `contacte.html?tipus=${encodeURIComponent(a.dataset.tipus)}&paquet=${encodeURIComponent(a.closest('.pk').querySelector('h3').textContent.trim())}`; };
-      set(); onLang.push(set);
-    });
+    addEventListener('hashchange', () => showTab(location.hash.slice(1)));
+    onLang.push(render);
+    // si hi ha Supabase configurat, s'hi llegeixen els paquets desats des del panell
+    if (CFG.supabaseUrl && CFG.supabaseAnonKey){
+      const ctl = new AbortController(); setTimeout(() => ctl.abort(), 3000);
+      fetch(`${CFG.supabaseUrl}/rest/v1/contingut?id=eq.paquets&select=dades`, { headers: { apikey: CFG.supabaseAnonKey, Authorization: 'Bearer ' + CFG.supabaseAnonKey }, signal: ctl.signal })
+        .then(r => r.ok ? r.json() : []).then(rows => { if (rows[0] && rows[0].dades && rows[0].dades.seccions) DATA = rows[0].dades; })
+        .catch(() => {}).finally(render);
+    } else {
+      // mode de prova del panell (sense Supabase): paquets.html?prova llegeix el que s'ha desat en aquest navegador
+      if (new URLSearchParams(location.search).has('prova')){ try { const s = localStorage.getItem('mna-paquets-prova'); if (s) DATA = JSON.parse(s); } catch (_) {} }
+      render();
+    }
   }
 
   /* =============== FORMULARI DE CONTACTE =============== */
@@ -575,7 +631,7 @@
   const textNodes = [];
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: n => {
     const p = n.parentElement;
-    if (!p || !n.textContent.trim() || p.closest('script,style,#quote,#term,#feed,#arch,.pk-n,#vState,.vault dd,.split,.mock,.bd-code')) return NodeFilter.FILTER_REJECT;
+    if (!p || !n.textContent.trim() || p.closest('script,style,#quote,#term,#feed,#arch,.pk-n,#vState,.vault dd,.split,.mock,.bd-code,.pk-app')) return NodeFilter.FILTER_REJECT;
     return NodeFilter.FILTER_ACCEPT;
   } });
   for (let n; (n = walker.nextNode()); ) textNodes.push([n, n.textContent]);

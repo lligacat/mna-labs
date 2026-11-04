@@ -67,7 +67,10 @@ Object.assign(window.I18N.es, {
 "Protegir les dades dels teus clients no és un afegit d'última hora. Cada projecte compleix el RGPD i la LOPDGDD des del primer dia.":"Proteger los datos de tus clientes no es un añadido de última hora. Cada proyecto cumple el RGPD y la LOPDGDD desde el primer día.",
 "L'estudi · MNA LABS":"El estudio · MNA LABS","Free Developing · MNA LABS":"Free Developing · MNA LABS","Emprenedoria aplicada · MNA LABS":"Emprendimiento aplicado · MNA LABS",
 "Explica'ns el projecte.":"Cuéntanos el proyecto.","Et responem en dos dies feiners amb una primera valoració. Sense compromís.":"Te respondemos en dos días laborables con una primera valoración. Sin compromiso.",
-"Plataforma SaaS":"Plataforma SaaS","Contacte · MNA LABS":"Contacto · MNA LABS"
+"Plataforma SaaS":"Plataforma SaaS","Contacte · MNA LABS":"Contacto · MNA LABS",
+"Et responem nosaltres dos, en dos dies feiners, amb una primera valoració. Sense compromís.":"Te respondemos nosotros dos, en dos días laborables, con una primera valoración. Sin compromiso.",
+"Programador de producció i emprenedor":"Programador de producción y emprendedor","Estudiant de matemàtiques":"Estudiante de matemáticas",
+"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila y Teo Garcia, el equipo de MNA LABS"
 });
 Object.assign(window.I18N.en, {
 "Salta al contingut":"Skip to content","Principal":"Main","L'estudi":"The studio","Contacte":"Contact",
@@ -138,5 +141,8 @@ Object.assign(window.I18N.en, {
 "RGPD":"GDPR",
 "L'estudi · MNA LABS":"The studio · MNA LABS","Free Developing · MNA LABS":"Free Developing · MNA LABS","Emprenedoria aplicada · MNA LABS":"Applied entrepreneurship · MNA LABS",
 "Explica'ns el projecte.":"Tell us about the project.","Et responem en dos dies feiners amb una primera valoració. Sense compromís.":"We'll reply within two working days with a first assessment. No commitment.",
-"Plataforma SaaS":"SaaS platform","Contacte · MNA LABS":"Contact · MNA LABS"
+"Plataforma SaaS":"SaaS platform","Contacte · MNA LABS":"Contact · MNA LABS",
+"Et responem nosaltres dos, en dos dies feiners, amb una primera valoració. Sense compromís.":"The two of us will reply within two working days with a first assessment. No commitment.",
+"Programador de producció i emprenedor":"Production software developer and entrepreneur","Estudiant de matemàtiques":"Mathematics student",
+"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila and Teo Garcia, the MNA LABS team"
 });
