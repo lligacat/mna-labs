@@ -36,11 +36,19 @@
     <nav class="nav-links" id="navLinks" aria-label="Principal">
       <span class="nav-ind" id="navInd" aria-hidden="true"></span>
       <a href="serveis.html" data-page="serveis">Serveis</a>
+      <a href="prototipatge.html" data-page="prototipatge">Prototipatge</a>
       <a href="paquets.html" data-page="paquets">Paquets</a>
+      <a href="mostres.html" data-page="mostres">Mostres</a>
       <a href="projectes.html" data-page="projectes">Projectes</a>
       <a href="estudi.html" data-page="estudi">L'estudi</a>
-      <a href="free-developing.html" data-page="free-developing">Free Developing</a>
-      <a href="emprenedoria.html" data-page="emprenedoria">Emprenedoria</a>
+      <div class="nav-dd" id="navDd">
+        <button type="button" class="nav-dd-b" aria-expanded="false" aria-controls="navDdM">Programes</button>
+        <div class="nav-dd-m" id="navDdM">
+          <a href="free-developing.html" data-page="free-developing">Free Developing<small>El fem ara, el pagues més endavant</small></a>
+          <a href="emprenedoria.html" data-page="emprenedoria">Emprenedoria aplicada<small>Noves línies de negoci per a empreses</small></a>
+          <a href="afiliacions.html" data-page="afiliacions">Afiliacions<small>Descomptes en el que ja compres</small></a>
+        </div>
+      </div>
     </nav>
     <div class="nav-right">
       <div class="lang" role="group" aria-label="Idioma">
@@ -155,7 +163,7 @@
     </div>
     <div class="fcols">
       <div><h4>Serveis</h4><a href="serveis.html#webs">Webs</a><a href="serveis.html#botigues">Botigues en línia</a><a href="serveis.html#apps">Apps mòbils</a><a href="serveis.html#programari">Programari de gestió</a><a href="serveis.html#xarxes">Xarxes socials</a></div>
-      <div><h4>Com treballem</h4><a href="paquets.html">Paquets i preus</a><a href="free-developing.html">Free Developing</a><a href="emprenedoria.html">Emprenedoria aplicada</a></div>
+      <div><h4>Com treballem</h4><a href="paquets.html">Paquets i preus</a><a href="prototipatge.html">Prototipatge</a><a href="mostres.html">Mostres</a><a href="free-developing.html">Free Developing</a><a href="emprenedoria.html">Emprenedoria aplicada</a><a href="afiliacions.html">Afiliacions</a></div>
       <div><h4>L'estudi</h4><a href="estudi.html">Qui som</a><a href="projectes.html">Projectes</a><a href="estudi.html#privacitat">Privacitat</a><a href="estudi.html#collaboradors">Col·laboradors</a></div>
       <div><h4>Contacte</h4><a href="mailto:equip.lliga.cat@gmail.com">equip.lliga.cat@gmail.com</a><a href="contacte.html">Demana pressupost</a><span>Catalunya</span></div>
     </div>
@@ -165,6 +173,7 @@
 
 <script src="assets/i18n.js"></script>
 <script src="assets/i18n-pages.js"></script>
+<script src="assets/i18n-noves.js"></script>
 
 <script src="assets/site.js"></script>
 </body>

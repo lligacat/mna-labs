@@ -28,7 +28,7 @@
   const fBool = (label, path) => `<label class="check"><input type="checkbox" data-b="${path}"${get(path) ? ' checked' : ''}>${label}</label>`;
   const fLines = (label, path, hint) => `<label class="field"><span>${label}</span><textarea data-l="${path}">${esc((get(path) || []).map(tx).join('\n'))}</textarea><span class="hint">${hint || 'Una línia per element.'}</span></label>`;
   const fSel = (label, path, options) => `<label class="field"><span>${label}</span><select data-s="${path}">${options.map(([v, t]) => `<option value="${esc(v)}"${get(path) === v ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></label>`;
-  const UNITS = [['unic', 'pagament únic'], ['mes', '/mes'], ['web', 'web']];
+  const UNITS = [['unic', 'pagament únic'], ['mes', '/mes'], ['web', 'web'], ['comissio', '+ comissió per venda']];
   const TIPUS = ['Programari a mida', 'Plataforma SaaS', 'App mòbil', 'Web', 'Ecommerce', 'Xarxes socials', 'Free Developing', 'Emprenedoria aplicada', 'Encara no ho sé'].map(v => [v, v]);
   const MOCKS = [['web', 'Web'], ['shop', 'Botiga'], ['app', 'Aplicació de gestió'], ['ig', 'Instagram'], ['reel', 'Vídeo (reel)'], ['duo', 'Web + mòbil']];
 
@@ -45,6 +45,7 @@
       ${fBool('Marcar com a recomanat', P + '.recomanat')}
       <div class="sub"><h3>Preu</h3>
         <div class="grid3">${fNum('Preu (€)', P + '.preu')}${fSel('Unitat', P + '.unitat', UNITS)}<div>${fBool('Suma el preu de «totes les plataformes»', P + '.extra')}</div></div>
+        <label class="check"><input type="checkbox" data-nodes="${P}.desDe"${p.desDe === false ? '' : ' checked'}>Mostra «des de» davant del preu</label>
         <label class="check"><input type="checkbox" data-b="${P}.__p2"${p.preu2 ? ' checked' : ''}>Té un segon preu (per exemple, la quota mensual)</label>
         ${p.preu2 ? `<div class="grid3">${fNum('Segon preu (€)', P + '.preu2.preu')}${fSel('Unitat', P + '.preu2.unitat', UNITS)}<div>${fBool('Suma «totes les plataformes»', P + '.preu2.extra')}</div></div>` : ''}
       </div>
@@ -116,6 +117,7 @@
   });
   $('#editor').addEventListener('change', e => {
     const el = e.target, d = el.dataset;
+    if (d.nodes){ set(d.nodes, el.checked); setDirty(true); return; }
     if (d.b){
       if (d.b.endsWith('.__p2')){ const P = d.b.slice(0, -5); set(P + '.preu2', el.checked ? { preu: 0, unitat: 'mes', extra: false } : null); render(); }
       else set(d.b, el.checked);

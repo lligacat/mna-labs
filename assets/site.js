@@ -33,15 +33,28 @@
 
   /* =============== MENÚ =============== */
   const navEl = $('#nav'), navInd = $('#navInd'), navBurger = $('#navBurger'), navProg = $('#navProg');
-  const navAs = $$('#navLinks a');
-  const navOn = navAs.find(a => a.dataset.page === page) || null;
-  if (navOn){ navOn.classList.add('on'); navOn.setAttribute('aria-current', 'page'); }
+  const navAs = $$('#navLinks > a'), navDd = $('#navDd');
+  const navCur = $$('#navLinks a').find(a => a.dataset.page === page);
+  if (navCur){ navCur.classList.add('on'); navCur.setAttribute('aria-current', 'page'); }
+  const ddB = navDd && $('.nav-dd-b', navDd);
+  const navOn = navCur && navCur.closest('.nav-dd') ? ddB : navCur || null;
+  if (navOn === ddB && ddB) ddB.classList.add('on');
+  // desplegable «Programes»: s'obre amb el ratolí o amb un clic, i es tanca amb Esc o clicant fora
+  if (navDd){
+    const ddSet = o => { navDd.classList.toggle('open', o); ddB.setAttribute('aria-expanded', String(o)); };
+    let ddT;
+    ddB.addEventListener('click', () => ddSet(!navDd.classList.contains('open')));
+    if (hover){ navDd.addEventListener('pointerenter', () => { clearTimeout(ddT); ddSet(true); navHover = ddB; navMove(); }); navDd.addEventListener('pointerleave', () => { ddT = setTimeout(() => ddSet(false), 180); navHover = null; navMove(); }); }
+    document.addEventListener('click', e => { if (!navDd.contains(e.target)) ddSet(false); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && navDd.classList.contains('open')){ ddSet(false); ddB.focus(); } });
+  }
   const cta = $('.nav-cta'); if (cta && cta.dataset.page === page) cta.setAttribute('aria-current', 'page');
   let navHover = null;
   function navMove(){
     const a = navHover || navOn;
     if (!a || !a.offsetWidth){ navInd.style.opacity = 0; return; }
-    navInd.style.opacity = 1; navInd.style.width = a.offsetWidth + 'px'; navInd.style.transform = `translateX(${a.offsetLeft}px)`;
+    const x = a.getBoundingClientRect().left - navInd.parentElement.getBoundingClientRect().left;
+    navInd.style.opacity = 1; navInd.style.width = a.offsetWidth + 'px'; navInd.style.transform = `translateX(${x}px)`;
   }
   navAs.forEach(a => {
     a.addEventListener('pointerenter', () => { navHover = a; navMove(); });
@@ -194,6 +207,32 @@
       phone.style.opacity = pk; phone.style.transform = `translateY(${(1 - pk) * 40}%) rotate(${(1 - pk) * 6}deg)`;
       const tk = clamp((D - .62) / .2); toast.style.opacity = tk; toast.style.transform = `translateY(${(1 - tk) * -16}px) scale(${.96 + tk * .04})`;
       if (ci !== lastShown){ build.dataset.step = ci; lastShown = ci; }
+    });
+  }
+
+  /* =============== PROTOTIPATGE: l'invent passa d'esbós a peces i s'encén =============== */
+  const proto = $('#proto');
+  if (proto){
+    const caps = $$('.bd-cap', proto), rail = $$('.bd-rail i', proto), lines = $$('.pr-line', proto), fills = $$('.pr-fill', proto);
+    const layers = $$('.pr-layer', proto), labels = $$('.pr-labels > g', proto), led = $('.pr-led', proto), toast = $('.pr-toast', proto), grid = $('.pr-grid-lines', proto);
+    const SPREAD = [-96, -32, 32, 80];
+    lines.forEach(l => { l.setAttribute('pathLength', 1); l.style.strokeDasharray = 1; });
+    draws.push(now => {
+      if (!onScreen(proto)) return;
+      const p = reduce ? .999 : prog(proto);
+      const A = clamp(p / .22), B = clamp((p - .22) / .22), C = clamp((p - .44) / .28), D = clamp((p - .72) / .24);
+      const ci = Math.min(3, Math.floor(p * 4.02));
+      caps.forEach((c, i) => c.classList.toggle('on', i === ci));
+      rail.forEach((r, i) => r.style.setProperty('--f', clamp(p * 4 - i).toFixed(3)));
+      grid.style.opacity = .5 * (1 - B);
+      lines.forEach((l, i) => { l.style.strokeDashoffset = 1 - easeOut(clamp(A * 1.4 - (i % 6) * .08)); l.style.opacity = 1 - B * .75; });
+      fills.forEach(f => { f.style.opacity = easeOut(B); });
+      const k = ease(C) * (1 - ease(clamp((D - .55) / .45)) * .35);
+      layers.forEach((g, i) => { g.style.transform = `translateY(${SPREAD[i] * k}px)`; });
+      labels.forEach((g, i) => { const t = clamp(C * 1.6 - i * .15); g.style.opacity = t * (1 - clamp((D - .7) / .3)); g.style.transform = `translateY(${SPREAD[i] * k}px)`; });
+      const on = clamp(D / .4);
+      led.style.opacity = on * (.75 + Math.sin(now / 320) * .25);
+      const tk = clamp((D - .45) / .3); toast.style.opacity = tk; toast.style.transform = `translateY(${(1 - tk) * 16}px)`;
     });
   }
 
@@ -516,10 +555,10 @@
   if (pkgs && $('#pkApp')){
     const app = $('#pkApp'), CFG = window.MNA_CONFIG || {};
     const L = t => !t ? '' : typeof t === 'string' ? t : (t[LANG] || t.ca || '');
-    const UNIT = { unic: 'pagament únic', mes: '/mes', web: 'web' };
+    const UNIT = { unic: 'pagament únic', mes: '/mes', web: 'web', comissio: '+ comissió per venda' };
     let DATA = window.PAQUETS_DEFAULT, tab = null;
     const money = v => new Intl.NumberFormat(LOC(), { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
-    const price = (p, cls) => `<div class="pk-p${cls || ''}"><span class="pk-from">${cls ? '+' : esc(tr('des de'))}</span><span class="pk-n" data-v="${+p.preu || 0}"${p.extra ? ` data-x="${+DATA.plataformes.preu || 0}"` : ''}>${money(+p.preu || 0)}</span><span class="pk-u">${esc(tr(UNIT[p.unitat] || ''))}</span></div>`;
+    const price = (p, cls) => `<div class="pk-p${cls || ''}"><span class="pk-from">${cls ? '+' : p.desDe === false ? '' : esc(tr('des de'))}</span><span class="pk-n" data-v="${+p.preu || 0}"${p.extra ? ` data-x="${+DATA.plataformes.preu || 0}"` : ''}>${money(+p.preu || 0)}</span><span class="pk-u">${esc(tr(UNIT[p.unitat] || ''))}</span></div>`;
     const card = (p, i, sec) => {
       if (p.tipus === 'alt') return `<article class="pk alt" style="--i:${i}"><div class="pk-body"><h3>${esc(L(p.nom))}</h3><p class="pk-d">${esc(L(p.desc))}</p><a href="contacte.html" class="btn">${esc(L(p.boto))}</a></div></article>`;
       const m = (p.exemple && p.exemple.maqueta) || {}, opts = p.opcions || [];

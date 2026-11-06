@@ -835,6 +835,180 @@ window.PAQUETS_DEFAULT = {
     }
    ],
    "manteniment": true
+  },
+  {
+   "id": "gratuits",
+   "nom": {
+    "ca": "Sense cost inicial",
+    "es": "Sin coste inicial",
+    "en": "No upfront cost"
+   },
+   "extra": false,
+   "manteniment": false,
+   "paquets": [
+    {
+     "id": "gratuits-0",
+     "nom": {
+      "ca": "Pla gratuït de xarxes",
+      "es": "Plan gratuito de redes",
+      "en": "Free social media plan"
+     },
+     "desc": {
+      "ca": "Portem les teves xarxes sense quota mensual. Cobrem una comissió de cada venda que hi generem.",
+      "es": "Llevamos tus redes sin cuota mensual. Cobramos una comisión de cada venta que generemos.",
+      "en": "We run your social media with no monthly fee. We take a commission on every sale we bring in."
+     },
+     "recomanat": false,
+     "desDe": false,
+     "preu": 0,
+     "unitat": "comissio",
+     "extra": false,
+     "preu2": null,
+     "meta": [
+      {
+       "ca": "Només per a projectes que seleccionem",
+       "es": "Solo para proyectos que seleccionamos",
+       "en": "Only for projects we select"
+      },
+      {
+       "ca": "Comissió pactada per contracte",
+       "es": "Comisión pactada por contrato",
+       "en": "Commission agreed by contract"
+      }
+     ],
+     "inclou": [
+      {
+       "ca": "Estratègia i calendari de publicacions",
+       "es": "Estrategia y calendario de publicaciones",
+       "en": "Strategy and posting calendar"
+      },
+      {
+       "ca": "Disseny gràfic i fotos d'stock",
+       "es": "Diseño gráfico y fotos de stock",
+       "en": "Graphic design and stock photos"
+      },
+      {
+       "ca": "Enllaços de venda amb seguiment",
+       "es": "Enlaces de venta con seguimiento",
+       "en": "Tracked sales links"
+      },
+      {
+       "ca": "Informe mensual de vendes generades",
+       "es": "Informe mensual de ventas generadas",
+       "en": "Monthly report of sales generated"
+      },
+      {
+       "ca": "Instagram i Facebook",
+       "es": "Instagram y Facebook",
+       "en": "Instagram and Facebook"
+      }
+     ],
+     "opcions": [],
+     "tipus": "Xarxes socials",
+     "exemple": {
+      "marca": "Sabons Garbí",
+      "maqueta": {
+       "mock": "ig",
+       "handle": "sabons.garbi",
+       "bio": "Sabó artesà · Tarragona",
+       "posts": "Nou sabó de romaní;Fet a mà;Enviaments gratis;Oli d'oliva;Lot de regal;Sense plàstic",
+       "c1": "#3f6f73",
+       "c2": "#e6efe9",
+       "c3": "#b9cfc4"
+      }
+     }
+    },
+    {
+     "id": "gratuits-1",
+     "nom": {
+      "ca": "Pla gratuït de desenvolupament",
+      "es": "Plan gratuito de desarrollo",
+      "en": "Free development plan"
+     },
+     "desc": {
+      "ca": "Et fem la web, la botiga o l'app sense cost inicial. Cobrem una comissió de les vendes que faci.",
+      "es": "Te hacemos la web, la tienda o la app sin coste inicial. Cobramos una comisión de las ventas que haga.",
+      "en": "We build your website, shop or app with no upfront cost. We take a commission on the sales it makes."
+     },
+     "recomanat": true,
+     "desDe": false,
+     "preu": 0,
+     "unitat": "comissio",
+     "extra": false,
+     "preu2": null,
+     "meta": [
+      {
+       "ca": "Només per a projectes que seleccionem",
+       "es": "Solo para proyectos que seleccionamos",
+       "en": "Only for projects we select"
+      },
+      {
+       "ca": "Comissió i durada pactades per contracte",
+       "es": "Comisión y duración pactadas por contrato",
+       "en": "Commission and term agreed by contract"
+      }
+     ],
+     "inclou": [
+      {
+       "ca": "Disseny i programació a mida",
+       "es": "Diseño y programación a medida",
+       "en": "Custom design and development"
+      },
+      {
+       "ca": "Allotjament i manteniment inclosos",
+       "es": "Alojamiento y mantenimiento incluidos",
+       "en": "Hosting and maintenance included"
+      },
+      {
+       "ca": "Pagaments i panell de vendes",
+       "es": "Pagos y panel de ventas",
+       "en": "Payments and sales dashboard"
+      },
+      {
+       "ca": "Vendes visibles per a tots dos en temps real",
+       "es": "Ventas visibles para los dos en tiempo real",
+       "en": "Sales visible to both of us in real time"
+      },
+      {
+       "ca": "Millores mentre dura l'acord",
+       "es": "Mejoras mientras dura el acuerdo",
+       "en": "Improvements for as long as the agreement lasts"
+      }
+     ],
+     "opcions": [],
+     "tipus": "Free Developing",
+     "exemple": {
+      "marca": "Ceràmica Clot",
+      "maqueta": {
+       "mock": "shop",
+       "brand": "Ceràmica Clot",
+       "url": "ceramicaclot.cat",
+       "items": "Tassa esmaltada|18 €;Plat fondo|24 €;Gerra|42 €;Bol petit|14 €",
+       "c1": "#9a4a2f",
+       "c2": "#f1e4da"
+      }
+     }
+    },
+    {
+     "id": "gratuits-alt",
+     "tipus": "alt",
+     "nom": {
+      "ca": "Tens una altra proposta?",
+      "es": "¿Tienes otra propuesta?",
+      "en": "Got a different idea?"
+     },
+     "desc": {
+      "ca": "Som flexibles. Si tens una manera diferent de treballar plegats, explica-nos-la i en parlem.",
+      "es": "Somos flexibles. Si tienes otra forma de trabajar juntos, cuéntanosla y lo hablamos.",
+      "en": "We're flexible. If you have another way we could work together, tell us and let's talk."
+     },
+     "boto": {
+      "ca": "Proposa-la",
+      "es": "Propónla",
+      "en": "Suggest it"
+     }
+    }
+   ]
   }
  ],
  "manteniment": {
@@ -877,8 +1051,8 @@ window.PAQUETS_DEFAULT = {
   ]
  },
  "nota": {
-  "ca": "Preus sense IVA. Són preus de partida: el pressupost final el tanquem per escrit després de la primera reunió.",
-  "es": "Precios sin IVA. Son precios de partida: el presupuesto final lo cerramos por escrito tras la primera reunión.",
-  "en": "Prices exclude VAT. They are starting prices: we agree the final quote in writing after the first meeting."
+  "ca": "Preus sense IVA. Són preus de partida: el pressupost final el tanquem per escrit després de la primera reunió. Som flexibles i estem oberts a propostes, també en webs.",
+  "es": "Precios sin IVA. Son precios de partida: el presupuesto final lo cerramos por escrito tras la primera reunión. Somos flexibles y estamos abiertos a propuestas, también en webs.",
+  "en": "Prices exclude VAT. They are starting prices: we agree the final quote in writing after the first meeting. We're flexible and open to proposals, websites included."
  }
 };
