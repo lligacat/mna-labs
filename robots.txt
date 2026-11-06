@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /mna-labs/admin.html
+Sitemap: https://lligacat.github.io/mna-labs/sitemap.xml

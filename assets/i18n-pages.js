@@ -70,7 +70,9 @@ Object.assign(window.I18N.es, {
 "Plataforma SaaS":"Plataforma SaaS","Contacte · MNA LABS":"Contacto · MNA LABS",
 "Et responem nosaltres dos, en dos dies feiners, amb una primera valoració. Sense compromís.":"Te respondemos nosotros dos, en dos días laborables, con una primera valoración. Sin compromiso.",
 "Programador de producció i emprenedor":"Programador de producción y emprendedor","Estudiant de matemàtiques":"Estudiante de matemáticas",
-"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila y Teo Garcia, el equipo de MNA LABS"
+"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila y Teo Garcia, el equipo de MNA LABS",
+"Error 404":"Error 404","Aquesta pàgina no existeix.":"Esta página no existe.","Potser l'enllaç és antic o hi ha una lletra canviada. Tot el que fem és a la portada.":"Quizá el enlace es antiguo o hay una letra cambiada. Todo lo que hacemos está en la portada.",
+"Torna a la portada":"Volver a la portada","Escriu-nos":"Escríbenos","Pàgina no trobada · MNA LABS":"Página no encontrada · MNA LABS"
 });
 Object.assign(window.I18N.en, {
 "Salta al contingut":"Skip to content","Principal":"Main","L'estudi":"The studio","Contacte":"Contact",
@@ -144,5 +146,7 @@ Object.assign(window.I18N.en, {
 "Plataforma SaaS":"SaaS platform","Contacte · MNA LABS":"Contact · MNA LABS",
 "Et responem nosaltres dos, en dos dies feiners, amb una primera valoració. Sense compromís.":"The two of us will reply within two working days with a first assessment. No commitment.",
 "Programador de producció i emprenedor":"Production software developer and entrepreneur","Estudiant de matemàtiques":"Mathematics student",
-"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila and Teo Garcia, the MNA LABS team"
+"Martí Vila i Teo Garcia, l'equip de MNA LABS":"Martí Vila and Teo Garcia, the MNA LABS team",
+"Error 404":"Error 404","Aquesta pàgina no existeix.":"This page doesn't exist.","Potser l'enllaç és antic o hi ha una lletra canviada. Tot el que fem és a la portada.":"The link may be old or mistyped. Everything we do is on the home page.",
+"Torna a la portada":"Back to the home page","Escriu-nos":"Write to us","Pàgina no trobada · MNA LABS":"Page not found · MNA LABS"
 });
